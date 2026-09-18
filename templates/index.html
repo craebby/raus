@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RAUS</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+
+<body>
+
+<main>
+
+    <h1>🗑️ RAUS</h1>
+
+    <section class="today">
+        <h2>Heute</h2>
+        <div class="counter">
+            {{ today_count }} / 5
+        </div>
+        <p>5 Dinge aus dem Haus schaffen.</p>
+    </section>
+
+    <form action="/add" method="post">
+
+        <input
+            type="text"
+            name="name"
+            placeholder="Was ist raus?"
+            required
+            autofocus
+        >
+
+        <div class="actions">
+            <button name="action" value="Müll">🗑️ Müll</button>
+            <button name="action" value="Verschenkt">🎁 Verschenkt</button>
+            <button name="action" value="Verkauft">💰 Verkauft</button>
+            <button name="action" value="Wertstoffhof">♻️ Wertstoffhof</button>
+        </div>
+
+    </form>
+
+    <section>
+        <h2>Zuletzt raus</h2>
+
+        {% for item in items %}
+        <div class="item">
+            <strong>{{ item[0] }}</strong>
+            <span>{{ item[1] }}</span>
+        </div>
+        {% endfor %}
+
+    </section>
+
+</main>
+
+</body>
+</html>
