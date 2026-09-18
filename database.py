@@ -76,7 +76,7 @@ def get_today_count():
     with get_connection() as conn:
         result = conn.execute(
             """
-            SELECT COUNT(*)
+            SELECT COUNT(quantity) AS total
             FROM items
             WHERE created_at = ?
             """,
