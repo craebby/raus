@@ -21,36 +21,61 @@
         <p>5 Dinge aus dem Haus schaffen.</p>
     </section>
 
-    <form action="/add" method="post">
+    <form action="{{ '/save/' ~ edit_item[4] if edit_item else '/add' }}" method="post">
+
+        <input
+            type="number"
+            name="quantity"
+            placeholder="Wie viele?"
+            value="{{ edit_item[0] if edit_item else 1 }}"
+            required
+            autofocus
+        >
 
         <input
             type="text"
             name="name"
             placeholder="Was ist raus?"
+            value="{{ edit_item[1] if edit_item else '' }}"
             required
             autofocus
         >
-
+        {% if edit_item %}
+        <input
+            type="hidden"
+            name="item_id"
+            value="{{ edit_item[4] }}"
+        >
+        <input type="hidden" name="action" value="{{ edit_item[3] }}">
+        <button type="submit">Speichern</button>
+        {% else %}
         <div class="actions">
             <button name="action" value="Müll">🗑️ Müll</button>
             <button name="action" value="Verschenkt">🎁 Verschenkt</button>
             <button name="action" value="Verkauft">💰 Verkauft</button>
             <button name="action" value="Wertstoffhof">♻️ Wertstoffhof</button>
         </div>
+        {% endif %}
 
     </form>
-
+    {% if not edit_item %}
     <section>
         <h2>Zuletzt raus</h2>
 
         {% for item in items %}
         <div class="item">
-            <strong>{{ item[0] }}</strong>
-            <span>{{ item[1] }}</span>
+            <form class="edit-form" action="/edit/{{ item[4] }}" method="get">
+                <span>{{ item[0] }}</span>
+                <strong>{{ item[1] }}</strong>
+                <span>{{ item[2] }}</span>
+                <span>{{ item[3] }}</span>
+                <button class="edit-button">✏️ Edit</button>
+            </form>
         </div>
         {% endfor %}
 
     </section>
+    {% endif %}
 
 </main>
 
